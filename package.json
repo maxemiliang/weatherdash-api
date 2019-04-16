@@ -1,0 +1,25 @@
+{
+  "name": "weatherdash",
+  "version": "0.1.0",
+  "description": "Weather data api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.maxemiliang.cloud:10022/maxemiliang/weatherdash.git"
+  },
+  "author": "Maxemilian Grönblom <maxemiliang@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.12.0",
+    "nodemon": "^1.18.11"
+  }
+}
