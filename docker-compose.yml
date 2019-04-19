@@ -7,3 +7,18 @@ services:
       - '3000:3000'
     environment:
       PORT: 3000
+    depends_on:
+      - postgres
+      - redis
+  postgres:
+    volumes:
+      - postgres_data:/data
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: development
+      POSTGRES_DB: weatherdash
+  redis:
+    image: redis
+
+volumes:
+  postgres_data:
