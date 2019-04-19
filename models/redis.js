@@ -1,7 +1,7 @@
 const redis = require('redis');
-const host = process.env.REDIS_URL || 'redis';
+const host = process.env.REDIS_URL || 'redis://redis:6379';
 const client = redis.createClient({
-  host: host,
+  url: host,
   enable_offline_queue: false
 });
 
