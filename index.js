@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000;
 const db = require('./models/db');
 const redis = require('./models/redis');
 const getModels = require('./utility').getModels;
+
 // Config
 // TODO: move to own file.
 let models = {};
