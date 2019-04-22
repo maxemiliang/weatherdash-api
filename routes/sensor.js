@@ -27,6 +27,7 @@ module.exports = (express, models = {}) => {
           statusCode: 403,
           message: 'Token is invalid.',
         });
+        return;
       }
       const data = await models['SensorData'].create({
         ...req.body
