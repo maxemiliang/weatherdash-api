@@ -21,6 +21,13 @@ module.exports = (express, models = {}) => {
     require('../test/validation/sensor_data')
   ), async (req, res) => {
     try {
+      if (req.body.token != "SecretTokenHello") {
+        res.status(403);
+        res.json({
+          statusCode: 403,
+          message: 'Token is invalid.',
+        });
+      }
       const data = await models['SensorData'].create({
         ...req.body
       });

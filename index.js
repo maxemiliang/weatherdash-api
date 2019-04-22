@@ -2,11 +2,16 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
+const Sentry = require('@sentry/node');
 const app = express();
 const port = process.env.PORT || 3000;
 const db = require('./models/db');
 const redis = require('./models/redis');
 const getModels = require('./utility').getModels;
+
+Sentry.init({
+  dsn: 'https://31ebd1ca30bd4d07ae854c1e020c41d0@sentry.maxemiliang.cloud/3'
+});
 
 // Config
 // TODO: move to own file.
@@ -24,6 +29,7 @@ let routes = {
 }
 
 // App middleware
+app.use(Sentry.Handlers.requestHandler()); // Sentry must be the first.
 app.use(helmet());
 app.use(bodyParser.urlencoded({
   extended: false
