@@ -11,10 +11,7 @@ module.exports = (express, models = []) => {
   });
 
   router.get('/healthz', async (req, res) => {
-    const json = {
-      response: 'healthy!',
-    };
-    res.json(json);
+    res.send('API Healthy');
   });
 
   return router;
