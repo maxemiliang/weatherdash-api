@@ -7,7 +7,14 @@ module.exports = (express, models = []) => {
       response: 'OK!',
       message: 'Hello world!',
     };
-    res.send(json);
+    res.json(json);
+  });
+
+  router.get('/healthz', async (req, res) => {
+    const json = {
+      response: 'healthy!',
+    };
+    res.json(json);
   });
 
   return router;

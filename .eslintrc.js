@@ -13,8 +13,6 @@ module.exports = {
     'sourceType': 'module',
   },
   'rules': {
-    'new-cap': {
-      properties: true,
-    }
+    'new-cap': 0,
   },
 };

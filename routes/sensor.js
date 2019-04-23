@@ -21,7 +21,7 @@ module.exports = (express, models = {}) => {
     require('../test/validation/sensor_data')
   ), async (req, res) => {
     try {
-      if (req.body.token != "SecretTokenHello") {
+      if (req.body.token !== "SecretTokenHello") {
         res.status(403);
         res.json({
           statusCode: 403,
