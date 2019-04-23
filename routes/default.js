@@ -1,5 +1,4 @@
 module.exports = (express, models = []) => {
-
   const router = express.Router();
 
   router.get('/', async (req, res) => {

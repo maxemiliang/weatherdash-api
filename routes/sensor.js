@@ -1,11 +1,10 @@
-const {
-  celebrate,
-  errors
-} = require('celebrate');
+const {celebrate, errors} = require('celebrate');
+const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
 module.exports = (express, models = {}) => {
-
   const router = express.Router();
+
+  router.use(AuthMiddleware);
 
   router.get('/', async (req, res) => {
     let data;
@@ -17,31 +16,25 @@ module.exports = (express, models = {}) => {
     res.send(JSON.stringify(data));
   });
 
-  router.post('/', celebrate(
-      require('../test/validation/sensor_data')
-  ), async (req, res) => {
-    try {
-      if (req.body.token !== "SecretTokenHello") {
-        res.status(403);
-        res.json({
-          statusCode: 403,
-          message: 'Token is invalid.',
-        });
-        return;
+  router.post(
+      '/',
+      celebrate(require('../test/validation/sensor_data')),
+      async (req, res) => {
+        try {
+          const data = await models['SensorData'].create({
+            ...req.body,
+          });
+          const resp = {
+            statusCode: 200,
+            message: 'SensorData created',
+            data: JSON.stringify(data),
+          };
+          res.json(resp);
+        } catch (err) {
+          throw err;
+        }
       }
-      const data = await models['SensorData'].create({
-        ...req.body
-      });
-      const resp = {
-        statusCode: 200,
-        message: 'SensorData created',
-        data: JSON.stringify(data),
-      }
-      res.json(resp);
-    } catch (err) {
-      throw err;
-    }
-  });
+  );
 
   router.use(errors());
 
