@@ -1,10 +1,8 @@
 const {celebrate, errors} = require('celebrate');
-const AuthMiddleware = require('../middlewares/AuthMiddleware');
+// const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
 module.exports = (express, models = {}) => {
   const router = express.Router();
-
-  router.use(AuthMiddleware);
 
   router.get('/', async (req, res) => {
     let data;
