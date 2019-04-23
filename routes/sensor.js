@@ -18,7 +18,7 @@ module.exports = (express, models = {}) => {
   });
 
   router.post('/', celebrate(
-    require('../test/validation/sensor_data')
+      require('../test/validation/sensor_data')
   ), async (req, res) => {
     try {
       if (req.body.token !== "SecretTokenHello") {

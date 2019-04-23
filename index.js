@@ -41,12 +41,12 @@ app.use(require('./middlewares/rateLimiterRedis')(app, redis));
 // Model initalization
 [
   'SensorData',
-].map(model => {
+].map((model) => {
   models[model] = require(`./models/${model}`).init(db);
 });
 
 // Routes are added to express here.
-Object.keys(routes).forEach(key => {
+Object.keys(routes).forEach((key) => {
   const route = routes[key];
   const Controller = require(`./routes/${route.name}`)(express, (route.models) ? getModels(models, route.models) : {});
   app.use(route.prefix, Controller);
