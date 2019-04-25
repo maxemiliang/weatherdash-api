@@ -16,7 +16,7 @@ module.exports.init = (sequelize) => {
         humidity: {
           type: Sequelize.FLOAT,
         },
-        sensor_name: {
+        source_name: {
           type: Sequelize.STRING,
           allowNull: false,
         },

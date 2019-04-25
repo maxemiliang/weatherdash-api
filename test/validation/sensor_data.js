@@ -6,7 +6,7 @@ module.exports = {
         .min(16)
         .max(16)
         .required(),
-    sensor_name: Joi.string()
+    source_name: Joi.string()
         .min(1)
         .max(255)
         .required(),
