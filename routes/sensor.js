@@ -1,10 +1,15 @@
 const {celebrate, errors} = require('celebrate');
+const redis = require('../models/redis');
+const cache = require('express-redis-cache')({
+  client: redis,
+  expire: 10,
+});
 // const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
 module.exports = (express, models = {}) => {
   const router = express.Router();
 
-  router.get('/', async (req, res) => {
+  router.get('/', cache.route(), async (req, res) => {
     let data;
     try {
       data = await models['SensorData'].findAll();
