@@ -2,7 +2,7 @@ const {celebrate, errors} = require('celebrate');
 const redis = require('../models/redis');
 const cache = require('express-redis-cache')({
   client: redis,
-  expire: 10,
+  expire: 60,
 });
 // const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
