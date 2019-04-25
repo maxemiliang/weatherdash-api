@@ -11,7 +11,7 @@ module.exports = (express, models = {}) => {
     } catch (err) {
       throw err;
     }
-    res.send(JSON.stringify(data));
+    res.json(data);
   });
 
   router.post(
