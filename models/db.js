@@ -7,6 +7,7 @@ const connString =
 // @ts-ignore
 const sequelize = new Sequelize(connString, {
   logging: false,
+  timezone: 'Europe/Helsinki',
 });
 
 module.exports = sequelize;
