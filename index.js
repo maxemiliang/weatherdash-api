@@ -39,6 +39,7 @@ app.use(
 app.use(bodyParser.json());
 app.use(morgan('combined'));
 app.use(require('./middlewares/RateLimiterRedis')(app, redis));
+app.use(require('./middlewares/ErrorHandler'));
 
 // Model initalization
 ['SensorData'].map((model) => {

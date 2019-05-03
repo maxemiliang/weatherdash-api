@@ -1,11 +1,9 @@
 const {Joi} = require('celebrate');
+const token = require('./token');
 
 module.exports = {
   body: {
-    token: Joi.string()
-        .min(16)
-        .max(16)
-        .required(),
+    token: token,
     source_name: Joi.string()
         .min(1)
         .max(255)
