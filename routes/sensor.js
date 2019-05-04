@@ -95,12 +95,11 @@ module.exports = (express, models = {}) => {
 
   router.get(
       '/date/:date',
+      cache.route(),
       celebrate(require('../test/validation/sensor_date')),
       wrap(async (req, res, next) => {
         try {
-          console.log(req.params.date);
           const date = dayjs(req.params.date);
-          console.log(date);
 
           const data = await models['SensorData'].findAll({
             where: {
@@ -113,7 +112,7 @@ module.exports = (express, models = {}) => {
           const resp = {
             statusCode: 200,
             message: `All sensor data from: ${date.toDate()}`,
-            data: JSON.stringify(data),
+            data: data,
           };
 
           res.json(resp);
