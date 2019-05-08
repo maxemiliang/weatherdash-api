@@ -1,16 +1,23 @@
 const {Joi} = require('celebrate');
+const apiKeys = ['SecretTokenHello', 'SuperDuperToken', 'SuperSecretToken'];
+
+const checkToken = (token) => {
+  return apiKeys.includes(token);
+};
 
 module.exports = () => {
   return (req, res, next) => {
-    const schema = Joi.string()
-        .min(12)
-        .max(64)
-        .required();
-
-    const result = Joi.validate(req.body.token, schema);
-    if (result.error || req.body.token !== 'SecretTokenHello!') {
-      console.log(result.error);
+    let isAuthed = false;
+    if (req.body.token) {
+      isAuthed = checkToken(req.body.token);
     }
-    next();
+    if (!isAuthed && req.query.token) {
+      isAuthed = checkToken(req.query.token);
+    }
+    if (!isAuthed) {
+      res.status(401).json({statusCode: 401, message: 'Unauthorized'});
+    } else {
+      next();
+    }
   };
 };

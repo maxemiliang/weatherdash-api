@@ -7,7 +7,7 @@ const cache = require('express-redis-cache')({
 });
 const Op = require('sequelize').Op;
 const wrap = require('./wrap');
-// const AuthMiddleware = require('../middlewares/AuthMiddleware');
+const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
 module.exports = (express, models = {}) => {
   const router = express.Router();
@@ -15,6 +15,7 @@ module.exports = (express, models = {}) => {
   router.get(
       '/',
       cache.route(),
+      AuthMiddleware(),
       wrap(async (req, res, next) => {
         let data;
         try {
@@ -46,6 +47,7 @@ module.exports = (express, models = {}) => {
   router.get(
       '/all',
       cache.route(),
+      AuthMiddleware(),
       wrap(async (req, res, next) => {
         let data;
         try {
@@ -70,6 +72,7 @@ module.exports = (express, models = {}) => {
   router.post(
       '/',
       celebrate(require('../test/validation/sensor_add')),
+      AuthMiddleware(),
       wrap(async (req, res, next) => {
         try {
           const data = await models['SensorData'].create({
@@ -96,6 +99,7 @@ module.exports = (express, models = {}) => {
   router.get(
       '/date/:date',
       cache.route(),
+      AuthMiddleware(),
       celebrate(require('../test/validation/sensor_date')),
       wrap(async (req, res, next) => {
         try {
