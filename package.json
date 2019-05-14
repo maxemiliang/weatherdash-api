@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "start:dev": "./node_modules/.bin/nodemon -L index.js"
+    "build": "./node_modules/.bin/backpack build",
+    "start": "node build/index.js",
+    "start:build": "./node_modules/.bin/backpack build && node build/main.js",
+    "dev": "./node_modules/.bin/backpack dev"
   },
   "repository": {
     "type": "git",
@@ -14,10 +16,15 @@
   },
   "author": "Maxemilian Grönblom <maxemiliang@gmail.com>",
   "license": "MIT",
+  "nodemonConfig": {
+    "legacyWatch": true
+  },
   "dependencies": {
     "@sentry/node": "^5.1.0",
+    "backpack-core": "^0.8.3",
     "body-parser": "^1.18.3",
     "celebrate": "^9.1.0",
+    "compression": "^1.7.4",
     "dayjs": "^1.8.13",
     "express": "^4.16.4",
     "express-limiter": "^1.6.1",
@@ -33,7 +40,6 @@
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "eslint-config-google": "^0.12.0",
-    "nodemon": "^1.18.11"
+    "eslint-config-google": "^0.12.0"
   }
 }

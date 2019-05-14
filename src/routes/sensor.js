@@ -71,7 +71,7 @@ module.exports = (express, models = {}) => {
 
   router.post(
       '/',
-      celebrate(require('../test/validation/sensor_add')),
+      celebrate(require('../../test/validation/sensor_add')),
       AuthMiddleware(),
       wrap(async (req, res, next) => {
         try {
@@ -100,7 +100,7 @@ module.exports = (express, models = {}) => {
       '/date/:date',
       cache.route(),
       AuthMiddleware(),
-      celebrate(require('../test/validation/sensor_date')),
+      celebrate(require('../../test/validation/sensor_date')),
       wrap(async (req, res, next) => {
         try {
           const date = dayjs(req.params.date);

@@ -7,11 +7,14 @@ const app = express();
 const port = process.env.PORT || 3000;
 const db = require('./models/db');
 const redis = require('./models/redis');
-const getModels = require('./utility').getModels;
+const getModels = require('../utility').getModels;
+const compression = require('compression');
 
-Sentry.init({
-  dsn: 'https://31ebd1ca30bd4d07ae854c1e020c41d0@sentry.maxemiliang.cloud/3',
-});
+if (process.env.SENTRY_ENABLED) {
+  Sentry.init({
+    dsn: 'https://31ebd1ca30bd4d07ae854c1e020c41d0@sentry.maxemiliang.cloud/3',
+  });
+}
 
 // Config
 // TODO: move to own file.
@@ -38,6 +41,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(morgan('combined'));
+app.use(compression());
 app.use(require('./middlewares/RateLimiterRedis')(app, redis));
 app.use(require('./middlewares/ErrorHandler'));
 

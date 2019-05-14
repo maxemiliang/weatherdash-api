@@ -1,7 +1,7 @@
 const {RateLimiterRedis} = require('rate-limiter-flexible');
 
 module.exports = (app, redis) => {
-  const rateLimiterOpts = require('../config/RateLimiter');
+  const rateLimiterOpts = require('../../config/RateLimiter');
   rateLimiterOpts.redis = redis;
 
   // @ts-ignore
