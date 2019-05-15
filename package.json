@@ -8,7 +8,8 @@
     "build": "./node_modules/.bin/backpack build",
     "start": "node build/index.js",
     "start:build": "./node_modules/.bin/backpack build && node build/main.js",
-    "dev": "./node_modules/.bin/backpack dev"
+    "dev": "./node_modules/.bin/backpack dev",
+    "dev:windows": "./node_modules/.bin/nodemon -L src/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "helmet": "^3.16.0",
     "joi": "^14.3.1",
     "morgan": "^1.9.1",
+    "nodemon": "^1.19.0",
     "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "rate-limiter-flexible": "^0.25.2",

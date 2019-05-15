@@ -6,8 +6,10 @@ const cache = require('express-redis-cache')({
   expire: 120,
 });
 const Op = require('sequelize').Op;
+const sequelize = require('sequelize');
 const wrap = require('./wrap');
 const AuthMiddleware = require('../middlewares/AuthMiddleware');
+const {averageHour, groupByTime} = require('../models/attributes.js');
 
 module.exports = (express, models = {}) => {
   const router = express.Router();
@@ -15,25 +17,32 @@ module.exports = (express, models = {}) => {
   router.get(
       '/',
       cache.route(),
+      celebrate({
+        query: {
+          token: require('../../test/validation/token'),
+          interval: require('../../test/validation/sensor_interval'),
+        },
+      }),
       AuthMiddleware(),
       wrap(async (req, res, next) => {
         let data;
-        try {
-          data = await models['SensorData'].findAll({
-            where: {
-              createdAt: {
-                [Op.lt]: new Date(),
-                [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
-              },
+        const query = {
+          where: {
+            createdAt: {
+              [Op.lt]: new Date(),
+              [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
             },
-          });
+          },
+        };
+
+        if (req.query.interval) {
+          query.attributes = averageHour;
+          query.group = groupByTime;
+        }
+        try {
+          data = await models['SensorData'].findAll(query);
         } catch (err) {
-          const error = {
-            statusCode: 500,
-            message: 'Error retriving data',
-          };
-          res.json(error);
-          return next(error);
+          throw err;
         }
         const resp = {
           statusCode: 200,
@@ -47,18 +56,26 @@ module.exports = (express, models = {}) => {
   router.get(
       '/all',
       cache.route(),
+      celebrate({
+        query: {
+          token: require('../../test/validation/token'),
+          interval: require('../../test/validation/sensor_interval'),
+        },
+      }),
       AuthMiddleware(),
       wrap(async (req, res, next) => {
         let data;
+        const query = {};
+        if (req.query.interval) {
+        // @ts-ignore
+          query.attributes = averageHour;
+          query.group = groupByTime;
+        }
+
         try {
-          data = await models['SensorData'].findAll();
+          data = await models['SensorData'].findAll(query);
         } catch (err) {
-          const error = {
-            statusCode: 500,
-            message: 'Error retriving data',
-          };
-          res.json(error);
-          return next(error);
+          throw err;
         }
         const resp = {
           statusCode: 200,
@@ -66,6 +83,50 @@ module.exports = (express, models = {}) => {
           data: data,
         };
         res.json(resp);
+      })
+  );
+
+  router.get(
+      '/date/:date',
+      cache.route(),
+      AuthMiddleware(),
+      celebrate(require('../../test/validation/sensor_date')),
+      wrap(async (req, res, next) => {
+        try {
+          const date = dayjs(req.params.date);
+          const query = {
+            where: {
+              createdAt: {
+                [Op.gte]: date.toISOString(),
+                [Op.lte]: date.add(1, 'day').toISOString(),
+              },
+            },
+            attributes: [
+              'id',
+              'temperature',
+              'humidity',
+              'source_name',
+              ['updatedAt', 'timestamp'],
+            ],
+          };
+
+          if (req.query.interval) {
+          // @ts-ignore
+            query.attributes = averageHour;
+            query.group = groupByTime;
+          }
+
+          const data = await models['SensorData'].findAll(query);
+          const resp = {
+            statusCode: 200,
+            message: `All sensor data from: ${date.toDate()}`,
+            data: data,
+          };
+
+          res.json(resp);
+        } catch (err) {
+          console.error(err);
+        }
       })
   );
 
@@ -86,47 +147,7 @@ module.exports = (express, models = {}) => {
           res.status(201);
           res.json(resp);
         } catch (err) {
-          const error = {
-            statusCode: 500,
-            message: 'Error adding data',
-          };
-          res.json(error);
-          return next(error);
-        }
-      })
-  );
-
-  router.get(
-      '/date/:date',
-      cache.route(),
-      AuthMiddleware(),
-      celebrate(require('../../test/validation/sensor_date')),
-      wrap(async (req, res, next) => {
-        try {
-          const date = dayjs(req.params.date);
-
-          const data = await models['SensorData'].findAll({
-            where: {
-              createdAt: {
-                [Op.gte]: date.toISOString(),
-                [Op.lte]: date.add(1, 'day').toISOString(),
-              },
-            },
-          });
-          const resp = {
-            statusCode: 200,
-            message: `All sensor data from: ${date.toDate()}`,
-            data: data,
-          };
-
-          res.json(resp);
-        } catch (err) {
-          const error = {
-            statusCode: 500,
-            message: 'Error retriving data',
-          };
-          res.json(error);
-          return next(error);
+          throw err;
         }
       })
   );

@@ -6,3 +6,11 @@ module.exports.getModels = (models, route) => {
 
   return modelObject;
 };
+
+module.exports.getAverage = async (data, interval) => {
+  const average = {};
+  data.forEach((element) => {
+    console.log(element);
+  });
+  return average;
+};

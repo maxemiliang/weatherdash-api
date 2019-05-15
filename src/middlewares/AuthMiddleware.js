@@ -1,4 +1,3 @@
-const {Joi} = require('celebrate');
 const apiKeys = ['SecretTokenHello', 'SuperDuperToken', 'SuperSecretToken'];
 
 const checkToken = (token) => {

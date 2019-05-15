@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const db = require('./models/db');
 const redis = require('./models/redis');
-const getModels = require('../utility').getModels;
+const getModels = require('./utility').getModels;
 const compression = require('compression');
 
 if (process.env.SENTRY_ENABLED) {
@@ -43,8 +43,6 @@ app.use(bodyParser.json());
 app.use(morgan('combined'));
 app.use(compression());
 app.use(require('./middlewares/RateLimiterRedis')(app, redis));
-app.use(require('./middlewares/ErrorHandler'));
-
 // Model initalization
 ['SensorData'].map((model) => {
   models[model] = require(`./models/${model}`).init(db);
@@ -59,6 +57,8 @@ Object.keys(routes).forEach((key) => {
   );
   app.use(route.prefix, Controller);
 });
+
+app.use(require('./middlewares/ErrorHandler'));
 
 // Initialize the express app.
 (async () => {
