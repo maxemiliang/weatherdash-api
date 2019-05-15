@@ -6,7 +6,6 @@ const cache = require('express-redis-cache')({
   expire: 120,
 });
 const Op = require('sequelize').Op;
-const sequelize = require('sequelize');
 const wrap = require('./wrap');
 const AuthMiddleware = require('../middlewares/AuthMiddleware');
 const {averageHour, groupByTime} = require('../models/attributes.js');
