@@ -13,6 +13,7 @@ module.exports = () => {
     if (!isAuthed && req.query.token) {
       isAuthed = checkToken(req.query.token);
     }
+    res.use_express_redis_cache = !isAuthed;
     if (!isAuthed) {
       res.status(401).json({statusCode: 401, message: 'Unauthorized'});
     } else {

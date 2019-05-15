@@ -8,21 +8,25 @@ const cache = require('express-redis-cache')({
 const Op = require('sequelize').Op;
 const wrap = require('./wrap');
 const AuthMiddleware = require('../middlewares/AuthMiddleware');
-const {averageHour, groupByTime} = require('../models/attributes.js');
+const {
+  averageHour,
+  groupByTime,
+  orderByTime,
+} = require('../models/helpers.js');
 
 module.exports = (express, models = {}) => {
   const router = express.Router();
 
   router.get(
       '/',
-      cache.route(),
+      AuthMiddleware(),
       celebrate({
         query: {
           token: require('../../test/validation/token'),
           interval: require('../../test/validation/sensor_interval'),
         },
       }),
-      AuthMiddleware(),
+      cache.route(),
       wrap(async (req, res, next) => {
         let data;
         const query = {
@@ -37,11 +41,12 @@ module.exports = (express, models = {}) => {
         if (req.query.interval) {
           query.attributes = averageHour;
           query.group = groupByTime;
+          query.order = orderByTime;
         }
         try {
           data = await models['SensorData'].findAll(query);
         } catch (err) {
-          throw err;
+          console.error(err);
         }
         const resp = {
           statusCode: 200,
@@ -54,7 +59,6 @@ module.exports = (express, models = {}) => {
 
   router.get(
       '/all',
-      cache.route(),
       celebrate({
         query: {
           token: require('../../test/validation/token'),
@@ -62,6 +66,7 @@ module.exports = (express, models = {}) => {
         },
       }),
       AuthMiddleware(),
+      cache.route(),
       wrap(async (req, res, next) => {
         let data;
         const query = {};
@@ -69,12 +74,13 @@ module.exports = (express, models = {}) => {
         // @ts-ignore
           query.attributes = averageHour;
           query.group = groupByTime;
+          query.order = orderByTime;
         }
 
         try {
           data = await models['SensorData'].findAll(query);
         } catch (err) {
-          throw err;
+          console.error(err);
         }
         const resp = {
           statusCode: 200,
@@ -87,9 +93,9 @@ module.exports = (express, models = {}) => {
 
   router.get(
       '/date/:date',
-      cache.route(),
-      AuthMiddleware(),
       celebrate(require('../../test/validation/sensor_date')),
+      AuthMiddleware(),
+      cache.route(),
       wrap(async (req, res, next) => {
         try {
           const date = dayjs(req.params.date);
@@ -113,6 +119,7 @@ module.exports = (express, models = {}) => {
           // @ts-ignore
             query.attributes = averageHour;
             query.group = groupByTime;
+            query.order = orderByTime;
           }
 
           const data = await models['SensorData'].findAll(query);
