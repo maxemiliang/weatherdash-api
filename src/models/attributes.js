@@ -16,6 +16,7 @@ module.exports.averageHour = [
     sequelize.fn('AVG', sequelize.col('humidity')),
     'avg_humidity',
   ],
+  'source_name',
 ];
 
-module.exports.groupByTime = 'timestamp';
+module.exports.groupByTime = ['timestamp', 'source_name'];
