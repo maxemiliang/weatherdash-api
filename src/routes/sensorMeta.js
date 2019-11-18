@@ -18,14 +18,23 @@ module.exports = (express, models = {}) => {
       wrap(async (req, res, next) => {
         try {
           const data = await models['SensorMeta'].findOne({where: {sensor_name: req.params.sensor_name}});
-          res.status(200);
-          const resp = {
-            statusCode: 200,
-            message: 'Retrived SensorMeta',
-            data: data,
+          if (data != null) {
+            res.status(200);
+            const resp = {
+              statusCode: 200,
+              message: 'Retrived SensorMeta',
+              data: data,
+            }
+            res.json(resp);
+          } else {
+            res.status(404);
+            const resp = {
+              statusCode: 404,
+              message: 'SensorMeta not found',
+            }
+            res.json(resp);
           }
-          res.json(resp);
-        } catch(err) {
+        } catch (err) {
           throw err;
         }
       }),
