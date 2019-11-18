@@ -6,3 +6,4 @@ services:
       - .:/app/
       - ./node_modules/:/app/node_modules
     command: npm run dev:windows
+    

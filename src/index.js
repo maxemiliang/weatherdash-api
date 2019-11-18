@@ -29,6 +29,11 @@ const routes = {
     prefix: '/sensor',
     models: ['SensorData'],
   },
+  sensor_meta: {
+    name: 'sensorMeta',
+    prefix: '/sensor_meta',
+    models: ['SensorMeta'],
+  }
 };
 
 // App middleware
@@ -44,7 +49,7 @@ app.use(morgan('combined'));
 app.use(compression());
 app.use(require('./middlewares/RateLimiterRedis')(app, redis));
 // Model initalization
-['SensorData'].map((model) => {
+['SensorData', 'SensorMeta'].map((model) => {
   models[model] = require(`./models/${model}`).init(db);
 });
 
