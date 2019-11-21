@@ -33,6 +33,7 @@ module.exports = (express, models = {}) => {
           where: {
             createdAt: {
               [Op.lt]: new Date(),
+              // @ts-ignore
               [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
             },
           },

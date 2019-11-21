@@ -1,10 +1,4 @@
 const {celebrate, errors} = require('celebrate');
-const redis = require('../models/redis');
-const cache = require('express-redis-cache')({
-  client: redis,
-  expire: 120,
-});
-const Op = require('sequelize').Op;
 const wrap = require('./wrap');
 const AuthMiddleware = require('../middlewares/AuthMiddleware');
 
@@ -17,28 +11,30 @@ module.exports = (express, models = {}) => {
       AuthMiddleware(),
       wrap(async (req, res, next) => {
         try {
-          const data = await models['SensorMeta'].findOne({where: {sensor_name: req.params.sensor_name}});
+          const data = await models['SensorMeta'].findOne(
+              {where: {sensor_name: req.params.sensor_name}}
+          );
           if (data != null) {
             res.status(200);
             const resp = {
               statusCode: 200,
               message: 'Retrived SensorMeta',
               data: data,
-            }
+            };
             res.json(resp);
           } else {
             res.status(404);
             const resp = {
               statusCode: 404,
               message: 'SensorMeta not found',
-            }
+            };
             res.json(resp);
           }
         } catch (err) {
           throw err;
         }
       }),
-  )
+  );
 
   router.post(
       '/',
@@ -48,7 +44,7 @@ module.exports = (express, models = {}) => {
         try {
           let data = await models['SensorMeta'].upsert({
             ...req.body,
-          }, { returning: true });
+          }, {returning: true});
 
           if (data.length > 1) data = data[0];
 
@@ -68,5 +64,4 @@ module.exports = (express, models = {}) => {
   router.use(errors());
 
   return router;
-
 };
