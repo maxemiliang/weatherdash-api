@@ -14,6 +14,7 @@ if (process.env.SENTRY_ENABLED) {
   Sentry.init({
     dsn: 'https://31ebd1ca30bd4d07ae854c1e020c41d0@sentry.maxemiliang.cloud/3',
     release: `weatherdash-api@${process.env.VERSION_NUMBER}`,
+    environment: 'production',
   });
 }
 
