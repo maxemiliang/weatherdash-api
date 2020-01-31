@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="02ff2069-d882-4e74-bdae-66c0efb08b78" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Build</name>
+  <description />
+  <settings>
+    <options>
+      <option name="allowPersonalBuildTriggering" value="false" />
+      <option name="maximumNumberOfBuilds" value="1" />
+    </options>
+    <parameters>
+      <param name="env.SENTRY_AUTH_TOKEN" value="credentialsJSON:1dc535ae-7d20-4dba-a465-024daafd6474" spec="password readOnly='true' display='hidden'" />
+      <param name="env.SENTRY_ORG" value="main" />
+      <param name="env.SENTRY_URL" value="https://sentry.maxemiliang.cloud" />
+    </parameters>
+    <build-runners>
+      <runner id="RUNNER_5" name="" type="DockerCommand">
+        <parameters>
+          <param name="command.args" value="--pull --build-arg var_name=&quot;build-%build.counter%&quot;" />
+          <param name="docker.command.type" value="build" />
+          <param name="docker.image.namesAndTags" value="registry.maxemiliang.me/projects/weatherdash-api:build-%build.counter%" />
+          <param name="docker.push.remove.image" value="true" />
+          <param name="dockerfile.path" value="Dockerfile" />
+          <param name="dockerfile.source" value="PATH" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_7" name="Docker push to registry" type="DockerCommand">
+        <parameters>
+          <param name="docker.command.type" value="push" />
+          <param name="docker.image.namesAndTags" value="registry.maxemiliang.me/projects/%system.teamcity.projectName%:build-%build.counter%" />
+          <param name="docker.push.remove.image" value="true" />
+          <param name="dockerfile.source" value="PATH" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_8" name="Update dokku app" type="ssh-exec-runner">
+        <parameters>
+          <param name="jetbrains.buildServer.deployer.targetUrl" value="app.maxemiliang.cloud" />
+          <param name="jetbrains.buildServer.deployer.username" value="root" />
+          <param name="jetbrains.buildServer.sshexec.authMethod" value="UPLOADED_KEY" />
+          <param name="jetbrains.buildServer.sshexec.command"><![CDATA[docker pull registry.maxemiliang.me/projects/%system.teamcity.projectName%:build-%build.counter%
+docker tag registry.maxemiliang.me/projects/%system.teamcity.projectName%:build-%build.counter% dokku/weatherdash-api:build-%build.counter%
+dokku tags:deploy %system.teamcity.projectName% build-%build.counter%]]></param>
+          <param name="secure:jetbrains.buildServer.deployer.password" value="credentialsJSON:92f7693c-4dcc-4280-a258-2dbfcf965a94" />
+          <param name="teamcity.step.mode" value="execute_if_success" />
+          <param name="teamcitySshKey" value="JetBrainsDeployKey" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_9" name="Push release number to sentry" type="simpleRunner">
+        <parameters>
+          <param name="plugin.docker.imageId" value="getsentry/sentry-cli:latest" />
+          <param name="plugin.docker.imagePlatform" value="linux" />
+          <param name="plugin.docker.pull.enabled" value="true" />
+          <param name="script.content"><![CDATA[VERSION=build-%build.counter%
+# Create a release
+sentry-cli releases new -p %system.teamcity.projectName% $VERSION
+
+# Associate commits with the release
+sentry-cli releases set-commits --auto $VERSION
+
+sentry-cli releases deploys $VERSION new -e production]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="WeatherdashApi_HttpsGitMaxemiliangCloudMaxemiliangWeatherdashApiGitRefsHeadsMast" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters>
+          <param name="branchFilter" value="+:*" />
+          <param name="enableQueueOptimization" value="true" />
+          <param name="quietPeriodMode" value="DO_NOT_USE" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_6" type="commit-status-publisher">
+        <parameters>
+          <param name="publisherId" value="upsourcePublisher" />
+          <param name="secure:upsourcePassword" value="credentialsJSON:c4082e29-044f-41a4-b15d-4724f3566872" />
+          <param name="upsourceProjectId" value="WD" />
+          <param name="upsourceServerUrl" value="https://review.maxemiliang.cloud" />
+          <param name="upsourceUsername" value="maxemiliang" />
+        </parameters>
+      </extension>
+      <extension id="DockerSupport" type="DockerSupport">
+        <parameters>
+          <param name="login2registry" value="PROJECT_EXT_9" />
+          <param name="loginCheckbox" value="on" />
+        </parameters>
+      </extension>
+      <extension id="BUILD_EXT_7" type="VcsLabeling">
+        <parameters>
+          <param name="labelingPattern" value="build-%system.build.number%" />
+          <param name="successfulOnly" value="true" />
+          <param name="vcsRootId" value="WeatherdashApi_HttpsGitMaxemiliangCloudMaxemiliangWeatherdashApiGitRefsHeadsMast" />
+        </parameters>
+      </extension>
+      <extension id="perfmon" type="perfmon">
+        <parameters />
+      </extension>
+      <extension id="BUILD_EXT_12" type="commit-status-publisher">
+        <parameters>
+          <param name="gitlabApiUrl" value="https://git.maxemiliang.cloud/api/v4" />
+          <param name="publisherId" value="gitlabStatusPublisher" />
+          <param name="secure:gitlabAccessToken" value="credentialsJSON:0c646d90-da38-4803-8860-7169b0fb4c36" />
+          <param name="vcsRootId" value="WeatherdashApi_HttpsGitMaxemiliangCloudMaxemiliangWeatherdashApiGitRefsHeadsMast" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+
