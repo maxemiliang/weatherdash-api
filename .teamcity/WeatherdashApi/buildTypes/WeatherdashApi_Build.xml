@@ -74,6 +74,12 @@ sentry-cli releases deploys $VERSION new -e production]]></param>
           <param name="teamcity.tool.sonarquberunner" value="%teamcity.tool.sonar-qube-scanner.3.0.3.778-scanner%" />
         </parameters>
       </runner>
+      <runner id="RUNNER_14" name="Install node" type="jonnyzzz.nvm">
+        <parameters>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="version" value="12.14.1" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="WeatherdashApi_HttpsGitMaxemiliangCloudMaxemiliangWeatherdashApiGitRefsHeadsMast" />
