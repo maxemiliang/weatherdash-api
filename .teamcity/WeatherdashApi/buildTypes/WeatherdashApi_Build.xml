@@ -11,6 +11,7 @@
       <param name="env.SENTRY_AUTH_TOKEN" value="credentialsJSON:1dc535ae-7d20-4dba-a465-024daafd6474" spec="password readOnly='true' display='hidden'" />
       <param name="env.SENTRY_ORG" value="main" />
       <param name="env.SENTRY_URL" value="https://sentry.maxemiliang.cloud" />
+      <param name="sonar.host.url" value="https://sonar.maxemiliang.cloud" />
     </parameters>
     <build-runners>
       <runner id="RUNNER_5" name="" type="DockerCommand">
