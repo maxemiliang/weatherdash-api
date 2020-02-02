@@ -71,7 +71,7 @@ sentry-cli releases deploys $VERSION new -e production]]></param>
           <param name="sonarProjectVersion" value="build-%build.number%" />
           <param name="sonarServer" value="072ffd7d-fe6f-4b7c-9f85-e20d4cd4d3b8" />
           <param name="teamcity.step.mode" value="default" />
-          <param name="teamcity.tool.sonarquberunner" value="%teamcity.tool.sonar-qube-scanner.DEFAULT%" />
+          <param name="teamcity.tool.sonarquberunner" value="%teamcity.tool.sonar-qube-scanner.3.0.3.778-scanner%" />
         </parameters>
       </runner>
     </build-runners>
