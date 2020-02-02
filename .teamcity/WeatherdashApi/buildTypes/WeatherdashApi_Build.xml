@@ -63,6 +63,17 @@ sentry-cli releases deploys $VERSION new -e production]]></param>
           <param name="use.custom.script" value="true" />
         </parameters>
       </runner>
+      <runner id="RUNNER_13" name="Code Anlysis" type="sonar-plugin">
+        <parameters>
+          <param name="sonarProjectKey" value="weatherdash-api" />
+          <param name="sonarProjectName" value="weatherdash-api" />
+          <param name="sonarProjectSources" value="src" />
+          <param name="sonarProjectVersion" value="build-%build.number%" />
+          <param name="sonarServer" value="072ffd7d-fe6f-4b7c-9f85-e20d4cd4d3b8" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="teamcity.tool.sonarquberunner" value="%teamcity.tool.sonar-qube-scanner.DEFAULT%" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="WeatherdashApi_HttpsGitMaxemiliangCloudMaxemiliangWeatherdashApiGitRefsHeadsMast" />
