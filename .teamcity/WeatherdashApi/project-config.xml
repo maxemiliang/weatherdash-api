@@ -39,6 +39,14 @@
         <param name="showChanges" value="false" />
       </parameters>
     </extension>
+    <extension id="PROJECT_EXT_20" type="sonar-qube">
+      <parameters>
+        <param name="id" value="072ffd7d-fe6f-4b7c-9f85-e20d4cd4d3b8" />
+        <param name="login" value="afb26084f4408bbd28c6e73fb5ef03089ae337e1" />
+        <param name="name" value="MaxCloud SonarQube" />
+        <param name="url" value="https://sonar.maxemiliang.cloud" />
+      </parameters>
+    </extension>
     <extension id="PROJECT_EXT_9" type="OAuthProvider">
       <parameters>
         <param name="displayName" value="Docker Registry" />
