@@ -65,7 +65,6 @@ sentry-cli releases deploys $VERSION new -e production]]></param>
       </runner>
       <runner id="RUNNER_13" name="Code Anlysis" type="sonar-plugin">
         <parameters>
-          <param name="additionalParameters" value="-X" />
           <param name="sonarProjectKey" value="weatherdash-api" />
           <param name="sonarProjectName" value="weatherdash-api" />
           <param name="sonarProjectSources" value="src" />
