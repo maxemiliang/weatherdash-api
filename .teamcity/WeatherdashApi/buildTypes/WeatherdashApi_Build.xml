@@ -97,15 +97,6 @@ sentry-cli releases deploys $VERSION new -e production]]></param>
       </build-trigger>
     </build-triggers>
     <build-extensions>
-      <extension id="BUILD_EXT_6" type="commit-status-publisher">
-        <parameters>
-          <param name="publisherId" value="upsourcePublisher" />
-          <param name="secure:upsourcePassword" value="credentialsJSON:c4082e29-044f-41a4-b15d-4724f3566872" />
-          <param name="upsourceProjectId" value="WD" />
-          <param name="upsourceServerUrl" value="https://review.maxemiliang.cloud" />
-          <param name="upsourceUsername" value="maxemiliang" />
-        </parameters>
-      </extension>
       <extension id="DockerSupport" type="DockerSupport">
         <parameters>
           <param name="login2registry" value="PROJECT_EXT_9" />
