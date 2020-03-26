@@ -38,12 +38,12 @@
       <runner id="RUNNER_8" name="Update dokku app" type="ssh-exec-runner">
         <parameters>
           <param name="jetbrains.buildServer.deployer.targetUrl" value="app.maxemiliang.cloud" />
-          <param name="jetbrains.buildServer.deployer.username" value="root" />
-          <param name="jetbrains.buildServer.sshexec.authMethod" value="UPLOADED_KEY" />
+          <param name="jetbrains.buildServer.deployer.username" value="dokku_deploy" />
+          <param name="jetbrains.buildServer.sshexec.authMethod" value="PWD" />
           <param name="jetbrains.buildServer.sshexec.command"><![CDATA[docker pull registry.maxemiliang.me/projects/%system.teamcity.projectName%:build-%build.counter%
 docker tag registry.maxemiliang.me/projects/%system.teamcity.projectName%:build-%build.counter% dokku/weatherdash-api:build-%build.counter%
 dokku tags:deploy %system.teamcity.projectName% build-%build.counter%]]></param>
-          <param name="secure:jetbrains.buildServer.deployer.password" value="credentialsJSON:92f7693c-4dcc-4280-a258-2dbfcf965a94" />
+          <param name="secure:jetbrains.buildServer.deployer.password" value="credentialsJSON:a7c8beda-47ac-41c4-ac85-aad01df3a61c" />
           <param name="teamcity.step.mode" value="execute_if_success" />
           <param name="teamcitySshKey" value="JetBrainsDeployKey" />
         </parameters>
