@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vcs-root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="e497ca7a-4616-4e06-b29b-6b659c66bcfc" type="jetbrains.git" modification-check-interval="20" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>https://git.maxemiliang.cloud/prog3/weatherdash-api.git#refs/heads/master</name>
+  <param name="agentCleanFilesPolicy" value="ALL_UNTRACKED" />
+  <param name="agentCleanPolicy" value="ON_BRANCH_CHANGE" />
+  <param name="authMethod" value="PASSWORD" />
+  <param name="branch" value="refs/heads/master" />
+  <param name="ignoreKnownHosts" value="true" />
+  <param name="reportTagRevisions" value="true" />
+  <param name="secure:password" value="credentialsJSON:0e889100-127f-4243-804b-1a1be862b8f8" />
+  <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="teamcity:branchSpec" value="+:refs/heads/*" />
+  <param name="url" value="https://git.maxemiliang.cloud/prog3/weatherdash-api.git" />
+  <param name="useAlternates" value="true" />
+  <param name="username" value="maxemiliang" />
+  <param name="usernameStyle" value="USERID" />
+</vcs-root>
+

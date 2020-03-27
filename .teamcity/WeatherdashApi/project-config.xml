@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="548c4f89-e986-46db-aa8f-4a55f6365001" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>weatherdash-api</name>
+  <parameters />
+  <project-extensions>
+    <extension id="PROJECT_EXT_10" type="IssueTracker">
+      <parameters>
+        <param name="host" value="https://issues.maxemiliang.cloud" />
+        <param name="idPrefix" value="WD" />
+        <param name="name" value="YouTrack" />
+        <param name="secure:password" value="credentialsJSON:63c9be1a-d730-418f-a79b-5b8d12d36259" />
+        <param name="type" value="youtrack" />
+        <param name="username" value="maxemiliang" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_11" type="project-graphs">
+      <parameters>
+        <param name="defaultFilters" value="" />
+        <param name="format" value="duration" />
+        <param name="hideFilters" value="" />
+        <param name="series"><![CDATA[[
+  {
+    "type": "valueType",
+    "title": "Build Duration (all stages)",
+    "sourceBuildTypeId": "WeatherdashApi_Build",
+    "key": "BuildDuration"
+  }
+]]]></param>
+        <param name="seriesTitle" value="Serie" />
+        <param name="title" value="Build time" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_17" type="versionedSettings">
+      <parameters>
+        <param name="buildSettings" value="ALWAYS_USE_CURRENT" />
+        <param name="credentialsStorageType" value="credentialsJSON" />
+        <param name="enabled" value="true" />
+        <param name="rootId" value="WeatherdashApi_HttpsGitMaxemiliangCloudMaxemiliangWeatherdashApiGitRefsHeadsMast" />
+        <param name="showChanges" value="false" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_20" type="sonar-qube">
+      <parameters>
+        <param name="id" value="072ffd7d-fe6f-4b7c-9f85-e20d4cd4d3b8" />
+        <param name="login" value="afb26084f4408bbd28c6e73fb5ef03089ae337e1" />
+        <param name="name" value="MaxCloud SonarQube" />
+        <param name="url" value="https://sonar.maxemiliang.cloud" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_9" type="OAuthProvider">
+      <parameters>
+        <param name="displayName" value="Docker Registry" />
+        <param name="providerType" value="Docker" />
+        <param name="repositoryUrl" value="https://registry.maxemiliang.me" />
+        <param name="secure:userPass" value="credentialsJSON:63c9be1a-d730-418f-a79b-5b8d12d36259" />
+        <param name="userName" value="maxemiliang" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup />
+</project>
+
