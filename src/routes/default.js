@@ -4,7 +4,7 @@ module.exports = (express, models = []) => {
   router.get('/', async (req, res) => {
     const json = {
       response: 'OK!',
-      message: 'Hello world!',
+      message: 'Hello Axxell!'
     };
     res.json(json);
   });
