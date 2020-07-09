@@ -1,4 +1,4 @@
-[![Quality Gate Status](https://sonar.maxemiliang.cloud/api/project_badges/measure?project=weatherdash-api&metric=alert_status)](https://sonar.maxemiliang.cloud/dashboard?id=weatherdash-api)
+[![Quality gate](https://sonar.maxemiliang.cloud/api/project_badges/quality_gate?project=weatherdash-api)](https://sonar.maxemiliang.cloud/dashboard?id=weatherdash-api)
 
 # weatherdash-api
 
