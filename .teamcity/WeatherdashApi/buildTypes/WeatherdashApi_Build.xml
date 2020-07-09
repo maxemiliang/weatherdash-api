@@ -68,7 +68,7 @@ sentry-cli releases deploys $VERSION new -e production]]></param>
       <runner id="RUNNER_14" name="Install node" type="jonnyzzz.nvm">
         <parameters>
           <param name="teamcity.step.mode" value="default" />
-          <param name="version" value="12.14.1" />
+          <param name="version" value="12.18.2" />
         </parameters>
       </runner>
       <runner id="RUNNER_13" name="Code Anlysis" type="sonar-plugin">
