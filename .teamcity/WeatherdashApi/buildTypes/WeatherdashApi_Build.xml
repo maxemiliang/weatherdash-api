@@ -7,6 +7,9 @@
       <option name="allowPersonalBuildTriggering" value="false" />
       <option name="maximumNumberOfBuilds" value="1" />
     </options>
+    <disabled-settings>
+      <setting-ref ref="RUNNER_14" />
+    </disabled-settings>
     <parameters>
       <param name="env.SENTRY_AUTH_TOKEN" value="credentialsJSON:1dc535ae-7d20-4dba-a465-024daafd6474" spec="password readOnly='true' display='hidden'" />
       <param name="env.SENTRY_ORG" value="main" />
