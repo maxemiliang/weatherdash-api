@@ -103,7 +103,7 @@ sentry-cli releases deploys $VERSION new -e production]]></param>
     <build-extensions>
       <extension id="DockerSupport" type="DockerSupport">
         <parameters>
-          <param name="login2registry" value="PROJECT_EXT_9" />
+          <param name="login2registry" value="PROJECT_EXT_9,PROJECT_EXT_29" />
           <param name="loginCheckbox" value="on" />
         </parameters>
       </extension>
