@@ -47,6 +47,15 @@
         <param name="url" value="https://sonar.maxemiliang.cloud" />
       </parameters>
     </extension>
+    <extension id="PROJECT_EXT_29" type="OAuthProvider">
+      <parameters>
+        <param name="displayName" value="Docker Registry" />
+        <param name="providerType" value="Docker" />
+        <param name="repositoryUrl" value="https://docker.io" />
+        <param name="secure:userPass" value="credentialsJSON:17dee7b4-72bd-4f03-b757-990505ac6fcb" />
+        <param name="userName" value="maxcloud" />
+      </parameters>
+    </extension>
     <extension id="PROJECT_EXT_9" type="OAuthProvider">
       <parameters>
         <param name="displayName" value="Docker Registry" />
