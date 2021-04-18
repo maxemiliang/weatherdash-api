@@ -8,6 +8,7 @@
       <option name="maximumNumberOfBuilds" value="1" />
     </options>
     <disabled-settings>
+      <setting-ref ref="RUNNER_13" />
       <setting-ref ref="RUNNER_14" />
     </disabled-settings>
     <parameters>
